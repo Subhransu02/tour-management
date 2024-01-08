@@ -5,11 +5,12 @@ import { useParams } from "react-router-dom";
 import tourData from "../assets/data/tours";
 import calculateAvgRating from "./../utils/avgRating";
 import avatar from "../assets/images/avatar.jpg";
-import Booking from "../components/Booking/Booking";
+import Booking from "../components/Booking/Booking.jsx";
+import Newsletter from "../shared/Newsletter.jsx";
 
 const TourDetails = () => {
   const { id } = useParams();
-  const reviewMsgRef = useState("");
+  const reviewMsgRef = useRef("");
   const [tourRating, setTourRating] = useState(null);
 
   const tour = tourData.find((tour) => tour.id === id);
@@ -32,7 +33,7 @@ const TourDetails = () => {
     e.preventDefault();
     const reviewText = reviewMsgRef.current.value;
 
-    alert(`${reviewText}, ${tourRating}`);
+    //alert(`${reviewText}, ${tourRating}`);
   };
 
   return (
@@ -50,14 +51,10 @@ const TourDetails = () => {
                       <span className="tour__rating d-flex align-items-center gap-1">
                         <i
                           className="ri-star-s-fill"
-                          style={{ color: "var(--secondary-color" }}
+                          style={{ color: "var(--secondary-color)" }}
                         ></i>
                         {avgRating === 0 ? null : avgRating}{" "}
-                        {totalRating === 0 ? (
-                          "Not Rated"
-                        ) : (
-                          <span>({reviews?.length})</span>
-                        )}
+                        {totalRating === 0 ? "Not Rated" : reviews?.length}
                       </span>
 
                       <span>
@@ -128,32 +125,30 @@ const TourDetails = () => {
                   </Form>
 
                   <ListGroup className="user__reviews">
-                    {reviews?.map((review) => {
-                      return (
-                        <div className="review__item">
-                          <img src={avatar} alt="" />
+                    {reviews?.map((review) => (
+                      <div className="review__item" key={review.id}>
+                        <img src={avatar} alt="" />
 
-                          <div className="w-100">
-                            <div className="d-flex align-items-center justify-content-between">
-                              <div>
-                                <h5>Subhransu</h5>
-                                <p>
-                                  {new Date("06-10-2024").toLocaleDateString(
-                                    "en-US",
-                                    options
-                                  )}
-                                </p>
-                              </div>
-                              <span className="d-flex align-items-center">
-                                5<i className="ri-star-s-fill"></i>
-                              </span>
+                        <div className="w-100">
+                          <div className="d-flex align-items-center justify-content-between">
+                            <div>
+                              <h5>Subhransu</h5>
+                              <p>
+                                {new Date("06-10-2024").toLocaleDateString(
+                                  "en-US",
+                                  options
+                                )}
+                              </p>
                             </div>
-
-                            <h6>Amazing tour</h6>
+                            <span className="d-flex align-items-center">
+                              5<i className="ri-star-s-fill"></i>
+                            </span>
                           </div>
+
+                          <h6>Amazing tour</h6>
                         </div>
-                      );
-                    })}
+                      </div>
+                    ))}
                   </ListGroup>
                 </div>
                 {/*tour reviews section ends  */}
@@ -166,6 +161,7 @@ const TourDetails = () => {
           </Row>
         </Container>
       </section>
+      <Newsletter />
     </>
   );
 };
