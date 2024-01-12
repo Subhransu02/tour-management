@@ -37,7 +37,7 @@ const Tours = () => {
       <section className="pt-0">
         <Container>
           {loading && <h4 className="text-center pt-5">Loading...</h4>}
-          {error && <h4 className="text-center pt-5">Error...</h4>}
+          {error && <h4 className="text-center pt-5">{error}</h4>}
           {!loading && !error && (
             <Row>
               {tours?.map((tour) => (
